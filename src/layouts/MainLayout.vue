@@ -1,6 +1,5 @@
 <template>
   <q-layout view="hHh lpR lFf">
-
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -11,8 +10,8 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <!-- drawer content -->
+    <q-drawer :width="350" show-if-above v-model="leftDrawerOpen" side="left" bordered>
+      <drawer/>
     </q-drawer>
 
     <q-page-container>
@@ -24,8 +23,10 @@
 
 <script>
 import { ref } from 'vue'
+import drawer from 'src/components/drawer.vue'
 
 export default {
+  components: { drawer },
   setup () {
     const leftDrawerOpen = ref(false)
 
@@ -35,6 +36,13 @@ export default {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
+  },
+  data () {
+    return {
+      selectedImages: []
+    }
+  },
+  methods: {
   }
 }
 </script>
