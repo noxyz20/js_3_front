@@ -17,15 +17,18 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="500" bordered>
       <div v-for='image in images' :key="image.id">
         <div class="keyframe-image col-4">
-          <q-img :src="image.src" @click="image.checked = !image.checked" /> <!-- , $emit('update:selected-image', image) -->
-          <div>Séléctionnée : <q-icon v-show="!image.checked" name="close" class="text-red" style="font-size: 3em;" /><q-icon v-show="image.checked" name="check" class="text-teal" style="font-size: 3em;" /></div>
+          <q-img :src="image.src" @click="image.checked = !image.checked" />
+          <div class="keyframe-image-control">
+            <div>Séléctionnée : <q-icon v-show="!image.checked" name="close" class="text-red" style="font-size: 3em;" /><q-icon v-show="image.checked" name="check" class="text-teal" style="font-size: 3em;" /></div>
+            <q-btn color="primary" label="Montrer la frame" @click="seekValue = image.timecode" />
+          </div>
           <br>
         </div>
       </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view :images="images" />
+      <router-view :images="images" :seekValue="seekValue" />
     </q-page-container>
 
   </q-layout>
@@ -37,6 +40,13 @@
     margin-top: 5px;
     border-bottom: 1px solid black;
   }
+
+  .keyframe-image-control {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+  }
+
 </style>
 
 <script>
@@ -55,18 +65,19 @@ export default {
   },
   data () {
     return {
+      seekValue: null,
       images: [
         {
           id: 1,
           src: '/keyframes/149.jpg',
           checked: true,
-          timecode: 4.95
+          timecode: 0
         },
         {
           id: 2,
           src: '/keyframes/281.jpg',
           checked: true,
-          timecode: 9.36
+          timecode: 1
         },
         {
           id: 3,
@@ -94,6 +105,8 @@ export default {
         }
       ]
     }
+  },
+  methods: {
   }
 }
 </script>
