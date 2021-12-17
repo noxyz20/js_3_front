@@ -18,7 +18,7 @@
       <div v-for='image in images' :key="image.id">
         <div class="keyframe-image col-4">
           <q-img :src="image.src" @click="image.checked = !image.checked" /> <!-- , $emit('update:selected-image', image) -->
-          <div>Checked : {{ image.checked ? 'Oui' : 'Non'}}</div>
+          <div>Séléctionnée : <q-icon v-show="!image.checked" name="close" class="text-red" style="font-size: 3em;" /><q-icon v-show="image.checked" name="check" class="text-teal" style="font-size: 3em;" /></div>
           <br>
         </div>
       </div>
@@ -33,7 +33,9 @@
 
 <style>
   .keyframe-image {
-    margin: 5px
+    padding: 5px;
+    margin-top: 5px;
+    border-bottom: 1px solid black;
   }
 </style>
 
@@ -57,32 +59,38 @@ export default {
         {
           id: 1,
           src: '/keyframes/149.jpg',
-          checked: true
+          checked: true,
+          timecode: 4.95
         },
         {
           id: 2,
           src: '/keyframes/281.jpg',
-          checked: true
+          checked: true,
+          timecode: 9.36
         },
         {
           id: 3,
           src: '/keyframes/331.jpg',
-          checked: true
+          checked: true,
+          timecode: 11.03
         },
         {
           id: 4,
           src: '/keyframes/389.jpg',
-          checked: true
+          checked: true,
+          timecode: 12.95
         },
         {
           id: 5,
           src: '/keyframes/627.jpg',
-          checked: true
+          checked: true,
+          timecode: 20.9
         },
         {
           id: 6,
           src: '/keyframes/1011.jpg',
-          checked: true
+          checked: true,
+          timecode: 33.7
         }
       ]
     }
