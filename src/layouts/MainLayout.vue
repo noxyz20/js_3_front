@@ -17,7 +17,7 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="500" bordered>
       <div v-for='image in images' :key="image.id">
         <div class="keyframe-image col-4">
-          <q-img :src="image.src" @click="image.checked = !image.checked" />
+          <q-img :src="image.src" @click="image.checked = !image.checked" class="image"/>
           <div class="keyframe-image-control">
             <div>Séléctionnée : <q-icon v-show="!image.checked" name="close" class="text-red" style="font-size: 3em;" /><q-icon v-show="image.checked" name="check" class="text-teal" style="font-size: 3em;" /></div>
             <q-btn color="primary" label="Montrer la frame" @click="seekValue = image.timecode" />
@@ -28,7 +28,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view :images="images" :seekValue="seekValue" />
+      <router-view :images="images" :seekValue="seekValue" @keyframeData="getKeyframeData" />
     </q-page-container>
 
   </q-layout>
@@ -39,6 +39,16 @@
     padding: 5px;
     margin-top: 5px;
     border-bottom: 1px solid black;
+  }
+
+  .keyframe-image .image {
+    transition: 150ms;
+  }
+
+  .keyframe-image .image:hover {
+    opacity: 0.8;
+    transition: 150ms;
+    cursor: pointer;
   }
 
   .keyframe-image-control {
@@ -65,6 +75,7 @@ export default {
   },
   data () {
     return {
+      data: null,
       seekValue: null,
       images: [
         {
@@ -107,6 +118,10 @@ export default {
     }
   },
   methods: {
+    getKeyframeData (data) {
+      this.data = JSON.stringify(data)
+      console.log(this.data)
+    }
   }
 }
 </script>

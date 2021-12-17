@@ -26,7 +26,7 @@
       <q-btn color="primary" label="Ajouter cette keyFrame" @click="getKeyFrame" />
     </div>
     <div class="carousel" v-show="enableCarousel">
-      <h3>KeyFrame Séléctionnées</h3>
+      <h3>KeyFrame Séléctionnées : </h3>
       <q-carousel
         animated
         v-model="slide"
@@ -79,6 +79,7 @@ import Artplayer from 'artplayer/examples/vue/Artplayer'
 export default {
   name: 'PageIndex',
   props: ['images', 'seekValue'],
+  emits: ['keyframeData'],
   setup () {
     return {
       slide: ref(1)
@@ -86,7 +87,8 @@ export default {
   },
   data () {
     return {
-      isUpload: true,
+      isUpload: false,
+      uploadData: null,
       player: null,
       enableVideoPlayer: true,
       enableCarousel: true,
@@ -112,7 +114,12 @@ export default {
       this.player.seek = tc
     },
     postUpload (event) {
-      console.log(event)
+      if (event.xhr.status === 200) {
+        this.isUpload = true
+        this.uploadData = event.xhr.response
+        console.log(event)
+        this.$emit('keyframeData', JSON.parse(event.xhr.response))
+      }
     },
     updateHighlight () {
       this.playerOptions.highlight = this.highlightData
