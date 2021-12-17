@@ -17,10 +17,10 @@
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="500" bordered>
       <div v-for='image in images' :key="image.id">
         <div class="keyframe-image col-4">
-          <q-img :src="image.src" @click="image.checked = !image.checked" class="image"/>
+          <img :src="'localhost:5000/src/' + image.img" @click="image.checked = !image.checked" class="image"/>
           <div class="keyframe-image-control">
             <div>Séléctionnée : <q-icon v-show="!image.checked" name="close" class="text-red" style="font-size: 3em;" /><q-icon v-show="image.checked" name="check" class="text-teal" style="font-size: 3em;" /></div>
-            <q-btn color="primary" label="Montrer la frame" @click="seekValue = image.timecode" />
+            <q-btn color="primary" label="Montrer la frame" @click="seekValue = image.time_code" />
           </div>
           <br>
         </div>
@@ -77,50 +77,18 @@ export default {
     return {
       data: null,
       seekValue: null,
-      images: [
-        {
-          id: 1,
-          src: '/keyframes/149.jpg',
-          checked: true,
-          timecode: 0
-        },
-        {
-          id: 2,
-          src: '/keyframes/281.jpg',
-          checked: true,
-          timecode: 1
-        },
-        {
-          id: 3,
-          src: '/keyframes/331.jpg',
-          checked: true,
-          timecode: 11.03
-        },
-        {
-          id: 4,
-          src: '/keyframes/389.jpg',
-          checked: true,
-          timecode: 12.95
-        },
-        {
-          id: 5,
-          src: '/keyframes/627.jpg',
-          checked: true,
-          timecode: 20.9
-        },
-        {
-          id: 6,
-          src: '/keyframes/1011.jpg',
-          checked: true,
-          timecode: 33.7
-        }
-      ]
+      images: []
     }
   },
   methods: {
     getKeyframeData (data) {
       this.data = JSON.stringify(data)
-      console.log(this.data)
+      this.data = JSON.parse(this.data)
+      for (let i = 0; i < 12; i++) {
+        this.images.push(this.data.data[i])
+      }
+      // this.images = this.data.data
+      // console.log(this.data.data)
     }
   }
 }
